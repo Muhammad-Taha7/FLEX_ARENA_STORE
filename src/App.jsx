@@ -15,14 +15,14 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
 
-  // ✅ ADD TO CART (FIXED)
+  // ✅ ADD TO CART - Handles adding new items or incrementing quantity
   const handleAddToCart = (product) => {
     setCartItems((prev) => {
-      const existingItem = prev.find(
-        (item) => item.id === product.id
-      );
+      // Check if item already exists in cart
+      const existingItem = prev.find((item) => item.id === product.id);
 
       if (existingItem) {
+        // If exists, increase quantity
         return prev.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
@@ -30,28 +30,31 @@ function App() {
         );
       }
 
+      // If new item, add with quantity 1
       return [...prev, { ...product, quantity: 1 }];
     });
   };
 
-  // ✅ UPDATE QUANTITY (FIXED)
+  // ✅ UPDATE QUANTITY - Updates item quantity (used by +/- buttons)
   const handleUpdateQuantity = (productId, newQuantity) => {
+    if (newQuantity <= 0) {
+      // If quantity is 0 or less, remove the item
+      handleRemoveItem(productId);
+      return;
+    }
+
     setCartItems((prev) =>
-      prev
-        .map((item) =>
-          item.id === productId
-            ? { ...item, quantity: newQuantity }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
+      prev.map((item) =>
+        item.id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
     );
   };
 
-  // ✅ REMOVE ITEM (FIXED)
+  // ✅ REMOVE ITEM - Completely removes item from cart (used by trash button)
   const handleRemoveItem = (productId) => {
-    setCartItems((prev) =>
-      prev.filter((item) => item.id !== productId)
-    );
+    setCartItems((prev) => prev.filter((item) => item.id !== productId));
   };
 
   return (
@@ -59,6 +62,8 @@ function App() {
       <Navbar
         cartItems={cartItems}
         onCartOpen={() => setCartOpen(true)}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
       />
 
       <Routes>
