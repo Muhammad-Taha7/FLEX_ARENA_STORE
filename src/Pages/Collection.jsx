@@ -24,7 +24,7 @@ export const Collection = ({ onAddToCart }) => {
       id: 'tsm1',
       name: 'Premium Athletic Track Suit',
       price: 3499,
-      image: 'https://images.unsplash.com/photo-1556906781-9a412961c28c?w=400&h=400&fit=crop',
+      image: 'https://www.triumph-sports.com/wp-content/uploads/2026/01/TraSui11-1.jpg',
       rating: 4.9,
       category: 'Track Suits Men',
       description: 'Complete training suit with jacket and pants',
