@@ -106,75 +106,101 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
     <>
       {/* NAVBAR */}
       <nav
-        className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
+        className={`w-full fixed top-0 left-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white shadow-lg border-b border-gray-100"
-            : "bg-white border-b border-gray-100"
+            ? "bg-black/95 backdrop-blur-xl shadow-[0_0_30px_rgba(9,121,105,0.3)] border-b border-[#097969]/30"
+            : "bg-black/80 backdrop-blur-md border-b border-white/10"
         }`}
       >
-        <div className="flex items-center justify-between w-full px-3 sm:px-4 md:px-8 py-3 sm:py-4 md:py-5">
+        <div className="flex items-center justify-between w-full px-4 sm:px-6 md:px-8 lg:px-12 py-4 md:py-5">
           {/* MOBILE MENU ICON & LOGO */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button
-              className="md:hidden p-1.5 sm:p-2 hover:bg-gray-50 rounded-lg transition-colors"
+              className="md:hidden p-2 hover:bg-white/10 rounded-xl transition-all duration-300 group"
               onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
             >
-              <Menu className="h-5 w-5 sm:h-6 sm:w-6 text-black" />
+              <Menu className="h-6 w-6 text-white group-hover:text-[#097969] transition-colors" />
             </button>
 
             {/* LOGO */}
             <Link
               to="/"
-              className="flex items-center gap-1.5 sm:gap-2.5 group"
+              className="flex items-center gap-2.5 group"
               onClick={() => setMenuOpen(false)}
             >
-              <div className="h-8 w-8 sm:h-10 sm:w-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-                <span className="text-white font-bold text-sm sm:text-lg">FG</span>
+              <div className="relative h-10 w-10 sm:h-12 sm:w-12">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#097969] to-[#065951] rounded-xl blur-md opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Icon container */}
+                <div className="relative h-full w-full bg-gradient-to-br from-[#097969] to-[#065951] rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(9,121,105,0.6)] transition-all duration-300 transform group-hover:scale-110">
+                  <span className="text-white font-black text-lg sm:text-xl">FG</span>
+                </div>
               </div>
-              <span className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight">
-                Fit<span className="text-emerald-500">Gear</span>
-              </span>
+              <div className="flex flex-col">
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-white leading-none">
+                  Fit<span className="text-[#097969]">Gear</span>
+                </span>
+                <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Premium Fitness</span>
+              </div>
             </Link>
           </div>
 
           {/* DESKTOP NAVIGATION */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2">
+          <div className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
                 to={link.to}
                 className={({ isActive }) =>
-                  `px-3 lg:px-4 py-2 lg:py-2.5 rounded-lg text-xs lg:text-sm font-semibold transition-all duration-200 ${
+                  `relative px-5 py-2.5 rounded-xl text-sm lg:text-base font-bold transition-all duration-300 group ${
                     isActive
-                      ? "text-white bg-emerald-500 shadow-md"
-                      : "text-gray-700 hover:text-emerald-500 hover:bg-gray-50"
+                      ? "text-white"
+                      : "text-gray-300 hover:text-white"
                   }`
                 }
               >
-                {link.label}
+                {({ isActive }) => (
+                  <>
+                    {/* Active background */}
+                    {isActive && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#097969] to-[#0a9178] rounded-xl shadow-lg shadow-[#097969]/50"></div>
+                    )}
+                    {/* Hover background */}
+                    <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    {/* Text */}
+                    <span className="relative z-10">{link.label}</span>
+                    {/* Active indicator line */}
+                    {isActive && (
+                      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-white rounded-full"></div>
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
           </div>
 
           {/* DESKTOP: RIGHT SIDE ACTIONS */}
-          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+          <div className="flex items-center gap-3">
             {/* Cart with Badge */}
             <div className="relative">
               <button
                 onClick={() => setCartOpen(true)}
-                className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2.5 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-transparent hover:border-gray-200"
+                className="group relative flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#097969]/50 transition-all duration-300"
                 aria-label="Open cart"
               >
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#097969]/20 to-[#0a9178]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
                 <div className="relative">
-                  <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 text-gray-800" />
+                  <ShoppingCart className="h-5 w-5 text-white group-hover:text-[#097969] transition-colors" />
                   {cartItems.length > 0 && (
-                    <span className="absolute -top-1.5 sm:-top-2 -right-1.5 sm:-right-2 flex h-4 w-4 sm:h-5 sm:w-5 items-center justify-center rounded-full bg-emerald-500 text-[10px] sm:text-xs font-bold text-white shadow-md">
+                    <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-[#097969] to-[#0a9178] text-[10px] font-black text-white shadow-lg shadow-[#097969]/50 animate-pulse">
                       {cartItems.length}
                     </span>
                   )}
                 </div>
-                <span className="hidden lg:inline text-xs lg:text-sm font-semibold text-gray-800">
+                <span className="hidden lg:inline text-sm font-bold text-white relative">
                   Cart
                 </span>
               </button>
@@ -186,53 +212,59 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
                 <div className="flex items-center">
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-1.5 sm:gap-2.5 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 border border-transparent hover:border-gray-200"
+                    className="group flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#097969]/50 transition-all duration-300"
                   >
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#097969]/20 to-[#0a9178]/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
                     {currentUser.photoURL ? (
                       <img
                         src={currentUser.photoURL}
                         alt={currentUser.displayName}
-                        className="h-7 w-7 sm:h-9 sm:w-9 rounded-full object-cover shadow-sm"
+                        className="h-9 w-9 rounded-full object-cover ring-2 ring-[#097969] shadow-lg relative"
                       />
                     ) : (
-                      <div className="h-7 w-7 sm:h-9 sm:w-9 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center shadow-sm">
-                        <span className="text-white font-bold text-xs sm:text-sm">
+                      <div className="h-9 w-9 bg-gradient-to-br from-[#097969] to-[#065951] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[#097969]/30 relative">
+                        <span className="text-white font-black text-sm">
                           {getUserInitials()}
                         </span>
                       </div>
                     )}
-                   
+                    <span className="hidden lg:block text-sm font-bold text-white relative">{currentUser.displayName}</span>
                     <ChevronDown
-                      className={`hidden lg:block h-3 w-3 sm:h-4 sm:w-4 text-gray-500 transition-transform duration-200 ${
-                        userDropdownOpen ? "rotate-180" : ""
+                      className={`hidden lg:block h-4 w-4 text-gray-400 transition-transform duration-300 relative ${
+                        userDropdownOpen ? "rotate-180 text-[#097969]" : ""
                       }`}
                     />
                   </button>
 
                   {/* User Dropdown */}
                   {userDropdownOpen && (
-                    <div className="absolute right-0 mt-20 w-56 sm:w-64 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 z-50 animate-fadeIn">
+                    <div className="absolute right-0 mt-3 w-72 bg-gradient-to-br from-black to-[#0a1a17] rounded-2xl shadow-2xl shadow-[#097969]/20 border border-[#097969]/30 py-2 z-50 backdrop-blur-xl animate-fadeInDown overflow-hidden">
+                      {/* Glow effect */}
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-[#097969] rounded-full blur-3xl opacity-20"></div>
+                      
                       {/* User Info Header */}
-                      <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-                        <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="relative px-4 py-4 border-b border-white/10">
+                        <div className="flex items-center gap-3">
                           {currentUser.photoURL ? (
                             <img
                               src={currentUser.photoURL}
                               alt={currentUser.displayName}
-                              className="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover"
+                              className="h-14 w-14 rounded-full object-cover ring-2 ring-[#097969] shadow-lg"
                             />
                           ) : (
-                            <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center">
-                              <span className="text-white font-bold text-base sm:text-lg">
+                            <div className="h-14 w-14 bg-gradient-to-br from-[#097969] to-[#065951] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[#097969]/50">
+                              <span className="text-white font-black text-xl">
                                 {getUserInitials()}
                               </span>
                             </div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="text-xs sm:text-sm font-semibold text-gray-800 truncate">
+                            <p className="text-sm font-bold text-white truncate">
                               {currentUser.displayName}
                             </p>
-                            <p className="text-[10px] sm:text-xs text-gray-500 truncate">
+                            <p className="text-xs text-gray-400 truncate">
                               {currentUser.email}
                             </p>
                           </div>
@@ -240,13 +272,15 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
                       </div>
 
                       {/* Logout */}
-                      <div className="border-t border-gray-100 mt-2 pt-2">
+                      <div className="relative p-2">
                         <button
                           onClick={handleLogout}
-                          className="flex items-center gap-2 sm:gap-3 w-full px-3 sm:px-4 py-2 sm:py-2.5 hover:bg-red-50 text-xs sm:text-sm font-medium text-red-600 transition-colors"
+                          className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-red-500/20 text-sm font-bold text-red-400 hover:text-red-300 transition-all duration-300 group"
                         >
-                          <LogOut className="h-3 w-3 sm:h-4 sm:w-4" />
-                          Logout
+                          <div className="p-2 bg-red-500/10 rounded-lg group-hover:bg-red-500/20 transition-colors">
+                            <LogOut className="h-4 w-4" />
+                          </div>
+                          <span>Logout</span>
                         </button>
                       </div>
                     </div>
@@ -255,10 +289,13 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
               ) : (
                 <button
                   onClick={handleLogin}
-                  className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-all duration-200 shadow-md hover:shadow-lg font-semibold text-xs sm:text-sm"
+                  className="group relative flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#097969] to-[#0a9178] text-white hover:shadow-lg hover:shadow-[#097969]/50 transition-all duration-300 font-bold text-sm overflow-hidden transform hover:scale-105"
                 >
-                  <User className="h-3 w-3 sm:h-4 sm:w-4" />
-                  <span className="hidden xs:inline">Login</span>
+                  {/* Animated background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0a9178] to-[#097969] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <User className="h-4 w-4 relative z-10" />
+                  <span className="hidden xs:inline relative z-10">Login</span>
                 </button>
               )}
             </div>
@@ -269,56 +306,60 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
       {/* MOBILE MENU OVERLAY */}
       {menuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 z-40 md:hidden animate-fadeIn"
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden animate-fadeIn"
           onClick={() => setMenuOpen(false)}
         />
       )}
 
       {/* MOBILE MENU */}
       <div
-        className={`fixed top-0 left-0 bottom-0 z-50 bg-white w-[85%] sm:w-[80%] max-w-sm transform ${
+        className={`fixed top-0 left-0 bottom-0 z-50 bg-gradient-to-br from-black via-[#0a1a17] to-black w-[85%] sm:w-[80%] max-w-sm transform ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out md:hidden shadow-2xl`}
+        } transition-transform duration-500 ease-out md:hidden shadow-2xl shadow-[#097969]/30 border-r border-[#097969]/30`}
       >
+        {/* Decorative glow effects */}
+        <div className="absolute top-0 left-0 w-64 h-64 bg-[#097969] rounded-full blur-[150px] opacity-20"></div>
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#097969] rounded-full blur-[150px] opacity-20"></div>
+
         {/* Menu Header */}
-        <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-500 to-emerald-600">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-white rounded-xl flex items-center justify-center shadow-md">
-              <span className="text-emerald-500 font-bold text-base sm:text-lg">FG</span>
+        <div className="relative flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 bg-gradient-to-br from-[#097969] to-[#065951] rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-black text-lg">FG</span>
             </div>
-            <span className="text-lg sm:text-xl font-bold text-white">Menu</span>
+            <span className="text-xl font-black text-white">Menu</span>
           </div>
           <button
             onClick={() => setMenuOpen(false)}
-            className="p-1.5 sm:p-2 hover:bg-white/20 rounded-lg transition-colors"
+            className="p-2 hover:bg-white/10 rounded-xl transition-all duration-300 group"
             aria-label="Close menu"
           >
-            <X className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+            <X className="h-6 w-6 text-white group-hover:text-[#097969] transition-colors" />
           </button>
         </div>
 
         {/* User Info Section (if logged in) */}
         {currentUser && (
-          <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-b border-gray-100">
-            <div className="flex items-center gap-2 sm:gap-3">
+          <div className="relative px-6 py-4 bg-white/5 border-b border-white/10 backdrop-blur-sm">
+            <div className="flex items-center gap-3">
               {currentUser.photoURL ? (
                 <img
                   src={currentUser.photoURL}
                   alt={currentUser.displayName}
-                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover"
+                  className="h-12 w-12 rounded-full object-cover ring-2 ring-[#097969] shadow-lg"
                 />
               ) : (
-                <div className="h-10 w-10 sm:h-12 sm:w-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-base sm:text-lg">
+                <div className="h-12 w-12 bg-gradient-to-br from-[#097969] to-[#065951] rounded-full flex items-center justify-center shadow-lg ring-2 ring-[#097969]/50">
+                  <span className="text-white font-black text-lg">
                     {getUserInitials()}
                   </span>
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <p className="text-xs sm:text-sm font-semibold text-gray-800 truncate">
+                <p className="text-sm font-bold text-white truncate">
                   {currentUser.displayName}
                 </p>
-                <p className="text-[10px] sm:text-xs text-gray-500 truncate">
+                <p className="text-xs text-gray-400 truncate">
                   {currentUser.email}
                 </p>
               </div>
@@ -327,34 +368,50 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
         )}
 
         {/* Menu Links */}
-        <div className="flex flex-col px-3 sm:px-4 py-4 sm:py-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 240px)' }}>
-          {navLinks.map((link) => (
+        <div className="relative flex flex-col px-4 py-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 240px)' }}>
+          {navLinks.map((link, index) => (
             <NavLink
               key={link.to}
               to={link.to}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `px-3 sm:px-4 py-3 sm:py-3.5 rounded-lg text-sm sm:text-base font-semibold mb-1 transition-all duration-200 ${
+                `relative px-5 py-4 rounded-xl text-base font-bold mb-2 transition-all duration-300 group overflow-hidden ${
                   isActive
-                    ? "text-white bg-emerald-500 shadow-md"
-                    : "text-gray-700 hover:bg-gray-50 hover:text-emerald-500"
+                    ? "text-white"
+                    : "text-gray-300 hover:text-white"
                 }`
               }
+              style={{
+                animation: `slideInLeft 0.4s ease-out ${index * 0.1}s both`
+              }}
             >
-              {link.label}
+              {({ isActive }) => (
+                <>
+                  {/* Active background */}
+                  {isActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#097969] to-[#0a9178] rounded-xl shadow-lg shadow-[#097969]/30"></div>
+                  )}
+                  {/* Hover background */}
+                  <div className="absolute inset-0 bg-white/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  {/* Border glow */}
+                  <div className={`absolute inset-0 rounded-xl border ${isActive ? 'border-[#097969]/50' : 'border-transparent group-hover:border-[#097969]/30'} transition-all duration-300`}></div>
+                  {/* Text */}
+                  <span className="relative z-10">{link.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </div>
 
         {/* Mobile Auth & Cart Footer */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-gray-200 p-3 sm:p-4 bg-white">
-          <div className="flex flex-col gap-2 sm:gap-3">
+        <div className="absolute bottom-0 left-0 right-0 border-t border-white/10 p-4 bg-black/50 backdrop-blur-xl">
+          <div className="flex flex-col gap-3">
             {currentUser ? (
               <button
                 onClick={handleLogout}
-                className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-200 font-semibold text-sm sm:text-base"
+                className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 transition-all duration-300 font-bold text-base group"
               >
-                <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
+                <LogOut className="h-5 w-5 group-hover:scale-110 transition-transform" />
                 Logout
               </button>
             ) : (
@@ -363,10 +420,13 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
                   setMenuOpen(false);
                   setAuthOpen(true);
                 }}
-                className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-all duration-200 font-semibold shadow-md text-sm sm:text-base"
+                className="relative flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-gradient-to-r from-[#097969] to-[#0a9178] text-white hover:shadow-lg hover:shadow-[#097969]/50 transition-all duration-300 font-bold text-base overflow-hidden group"
               >
-                <User className="h-4 w-4 sm:h-5 sm:w-5" />
-                Login / Signup
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0a9178] to-[#097969] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                
+                <User className="h-5 w-5 relative z-10 group-hover:scale-110 transition-transform" />
+                <span className="relative z-10">Login / Signup</span>
               </button>
             )}
           </div>
@@ -392,7 +452,7 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
         />
       )}
 
-      {/* Add some CSS for animations */}
+      {/* Add CSS for animations */}
       <style jsx>{`
         @keyframes fadeIn {
           from {
@@ -402,8 +462,35 @@ export const Navbar = ({ cartItems = [], onCartOpen, onUpdateQuantity, onRemoveI
             opacity: 1;
           }
         }
+        
+        @keyframes fadeInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
         .animate-fadeIn {
-          animation: fadeIn 0.2s ease-in-out;
+          animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .animate-fadeInDown {
+          animation: fadeInDown 0.3s ease-out;
         }
       `}</style>
     </>
