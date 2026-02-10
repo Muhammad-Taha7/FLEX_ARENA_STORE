@@ -1148,7 +1148,7 @@ export const Collection = ({ onAddToCart }) => {
       });
     } else {
       setFavorites([...favorites, productId]);
-      toast.success('Added to favorites! ❤️', {
+      toast.success('Added to favorites! ', {
         position: "bottom-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -1165,7 +1165,7 @@ export const Collection = ({ onAddToCart }) => {
       setSelectedSize('');
     } else {
       onAddToCart(product);
-      toast.success(`${product.name} added to cart! 🛒`, {
+      toast.success(`${product.name} added to cart! `, {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -1185,7 +1185,7 @@ export const Collection = ({ onAddToCart }) => {
         id: `${selectedProduct.id}-${selectedSize}-${selectedProduct.gender}`
       };
       onAddToCart(productWithSize);
-      toast.success(`${selectedProduct.name} (${selectedSize}) added to cart! 🛒`, {
+      toast.success(`${selectedProduct.name} (${selectedSize}) added to cart! `, {
         position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
