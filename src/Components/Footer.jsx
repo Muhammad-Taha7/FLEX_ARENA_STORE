@@ -20,7 +20,7 @@ export const Footer = () => {
 
   const quickLinks = [
     { name: "Home", path: "/" },
-    { name: "Products", path: "/products" },
+    { name: "Collection", path: "/collection" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
